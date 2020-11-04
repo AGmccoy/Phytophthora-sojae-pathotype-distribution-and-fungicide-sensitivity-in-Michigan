@@ -4,7 +4,7 @@ code used to analyze and visualize Virulence data, as well as fungicide sensitiv
 All code are presented in .R files with necessary files for analysis in excel.
 
 Code for all P.sojae fungicide data analysis.R
-•	.R file that contains code used to estimate EC50 concentrations, organize absolute and relative EC50 values, and summarize those estimations.
+.R file that contains code used to estimate EC50 concentrations, organize absolute and relative EC50 values, and summarize those estimations.
 Figure 1.data_only.xlsx
 •	Excel files that contains data used to produce Figure 1 in the manuscript
 Kaitany data analysis code.R
