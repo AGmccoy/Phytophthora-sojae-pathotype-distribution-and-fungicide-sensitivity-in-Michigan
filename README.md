@@ -1,7 +1,7 @@
 # _Phytophthora sojae_ pathotype distribution and fungicide sensitivity in Michigan.
-code used to analyze and visualize Virulence data, as well as fungicide sensitivity data for the P. sojae pathotype survey
+Scripts used to analyze and visualize Virulence data, as well as fungicide sensitivity data for the P. sojae pathotype survey
 
-All code are presented in .R files with necessary files for analysis in excel.
+# All code are presented in .R files with necessary files for analysis in excel.
 
 Code for all P.sojae fungicide data analysis.R
   
