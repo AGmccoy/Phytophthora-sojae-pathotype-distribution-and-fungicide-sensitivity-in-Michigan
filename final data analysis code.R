@@ -68,7 +68,7 @@ autoplot(Rps.summary, type = "count")
 
 Figure_1_data_only <- read_excel("L:/Austin/!Phytophthora sojae pathotype survey/!Pathotype paper WIP/Figures for paper/Figure 1.data_only.xlsx")
 
-plot <- ggplot(Figure_1_data_only, aes(allele, perc.path, fill=paper))
+plot <- ggplot(Figure_1_data_only, aes(allele, perc.path, fill=study))
 plot <- plot + geom_bar(stat = "identity", position = 'dodge', col = '#4d4d4d')
 plot <- plot + theme_gray() +
   theme(axis.text.x = element_text(size = 15, face = "bold", angle=45, hjust=1, family = "serif"),
@@ -81,7 +81,7 @@ plot <- plot + theme_gray() +
                      legend.key = element_blank(),
                      legend.title = element_text(size = 10, face="bold", family = "serif"),
                      legend.position = "right",
-                     strip.text.x = element_text(size = 10, face = "bold", family = "serif"),
+                     strip.text.x = element_text(size = 15, face = "bold", family = "serif"),
                      title = element_text(size = 16, family = "serif")) +
                       ggtitle("Figure 1") +
   xlab("Allele ") + ylab("Percent Isolates Pathogenic")
@@ -112,6 +112,30 @@ autoplot(complexities, type = "percentage")
 
 autoplot(complexities, type = "count")
 
+#### Figure 2 code ####
+# we produce the file "complexity data for figure 2.xlsx" by writing out the "complexities" to a .csv file for each study and then combined them manually into one file
+
+compare_complexities <- read_excel("complexity data for figure 2.xlsx")
+compare_complexities$complexity <- as.factor(compare_complexities$complexity)
+
+plot2 <- ggplot(compare_complexities, aes(complexity, distribution, fill=study))
+plot2 <- plot2 + geom_bar(stat = "identity", position = 'dodge', col = '#4d4d4d')
+plot2 <- plot2 + theme_gray() +
+  theme(axis.text.x = element_text(size = 15, face = "bold", angle=45, hjust=1, family = "serif"),
+        axis.text.y = element_text(size = 20, face = "bold", family = "serif"),
+        axis.title.x = element_text(size = 20, face = "bold", family = "serif"),
+        axis.title.y = element_text(size = 20, face = "bold", family = "serif"),
+        axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'),
+        axis.line.y = element_line(colour = 'gray', size=0.5, linetype='solid'),
+        legend.text = element_text(size = 10, face = "bold", family = "serif"),
+        legend.key = element_blank(),
+        legend.title = element_text(size = 10, face="bold", family = "serif"),
+        legend.position = "right",
+        strip.text.x = element_text(size = 15, face = "bold", family = "serif"),
+        title = element_text(size = 16, family = "serif")) +
+  ggtitle("Figure 2") +
+  xlab("Complexity") + ylab("Percentage of Isolates")
+plot2
 
 #final_data$Isolate <- as.integer(final_data$Isolate)
 
@@ -193,7 +217,7 @@ write.csv(pca.data, "kaitany_mccoy_pca_data_an_metadata.csv")
 
 #### data visualization for my survey, edited ####
 ggplot(data = pca.data, aes(x = X, y = Y)) +
-  geom_point(aes(colour = local)) +
+  geom_point(aes(colour = study)) +
   xlab(paste("PcoA1 - ", round(Axis1.percent,2), "%", sep = "")) +
   ylab(paste("PcoA2 - ", round(Axis2.percent,2), "%", sep = "")) +
   theme_bw() +
@@ -205,7 +229,7 @@ ggplot(data = pca.data, aes(x = X, y = Y)) +
     legend.text = element_text(face = "bold", size = 10),
     legend.key.size = unit(1, 'lines')
   ) +
-  stat_ellipse(data = pca.data, aes(x = X, y = Y, color=local),
+  stat_ellipse(data = pca.data, aes(x = X, y = Y, color=study),
                level = 0.95) +
     ggtitle("Figure 3. Jaccard distances PCA")
 
