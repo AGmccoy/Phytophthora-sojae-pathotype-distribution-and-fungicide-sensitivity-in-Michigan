@@ -6,9 +6,12 @@ library(data.table)
 library(ape)
 library(vegan)
 library(dplyr)
+library(adegenet)
+
 
 citation("ape")
 citation("vegan")
+citation()
 
 final_data <- read_excel("L:/Austin/!Phytophthora sojae pathotype survey/Pathotype records/Final Data set/excel Final Data set for publication.xlsx")
   
@@ -133,8 +136,7 @@ plot2 <- plot2 + theme_gray() +
         legend.position = "right",
         strip.text.x = element_text(size = 15, face = "bold", family = "serif"),
         title = element_text(size = 16, family = "serif")) +
-  ggtitle("Figure 2") +
-  xlab("Complexity") + ylab("Percentage of Isolates")
+    xlab("Complexity") + ylab("Percentage of Isolates")
 plot2
 
 #final_data$Isolate <- as.integer(final_data$Isolate)
@@ -216,7 +218,7 @@ pca.data <- left_join(princoor.pathotype.data, pathotype_metadata, by = "Sample"
 write.csv(pca.data, "kaitany_mccoy_pca_data_an_metadata.csv")
 
 #### data visualization for my survey, edited ####
-ggplot(data = pca.data, aes(x = X, y = Y)) +
+plot3 <- ggplot(data = pca.data, aes(x = X, y = Y)) +
   geom_point(aes(colour = study)) +
   xlab(paste("PcoA1 - ", round(Axis1.percent,2), "%", sep = "")) +
   ylab(paste("PcoA2 - ", round(Axis2.percent,2), "%", sep = "")) +
@@ -230,8 +232,8 @@ ggplot(data = pca.data, aes(x = X, y = Y)) +
     legend.key.size = unit(1, 'lines')
   ) +
   stat_ellipse(data = pca.data, aes(x = X, y = Y, color=study),
-               level = 0.95) +
-    ggtitle("Figure 3. Jaccard distances PCA")
+               level = 0.95) 
+plot3
 
 # Visually it looks like there could be two pathotype groups based on study, however, we do not know 
 ## if these are significant yet, so we need to do a PERMANOVA.
@@ -268,3 +270,62 @@ pathotype.adonis
 
 pathotype.anosim <- anosim(t.diversity.pathotype.jaccard, groups)
 pathotype.anosim
+
+# DAPC Analysis #
+final_data.matrix # data for DAPC analysis is in a binary data matrix
+groups <- factor(c(rep("Michigan_17",83), rep("Michigan_01", 78)))
+
+set.seed(999)
+# using xvalDapc to identify the number of PC to retain
+pathx <- xvalDapc(final_data.matrix, grp = groups) # this is a cross validation step used to identify the optimal number of principal coordinates to use in the analysis. 
+system.time(pathx2 <- xvalDapc(final_data.matrix, grp = groups, n.pca = 2:12, n.rep = 1000)) # this is the same as the step before, however, we are centering the validation around 5 PC used (2:12) and running it for 1000 reps to confirm 5 PC is the optimal number to use
+pathx2
+
+scatter(pathx2$DAPC, cex = 2, legend = TRUE, clabel = FALSE, posi.leg = "bottomleft", scree.pca = TRUE, posi.pca = "topleft", cleg = 0.75, xax = 1, yax = 2, inset.solid = 1)
+
+dapc1 <- dapc(final_data.matrix, var.contrib = TRUE, scale = FALSE, n.pca = 5, grp = groups) # ran with 1 discriminant function saved
+a.score.dapc1 <- a.score(dapc1) # on average only 34% accuracy
+a.score.optimum.dapc1 <- optim.a.score(dapc1)
+
+# validating the optimum PC to save for highest a-score
+dapc2 <- dapc(final_data.matrix, grp = groups, n.pca = 14, n.da = 100)
+optim.a.score(dapc2) # this also identifies n=5 as the optimal PC to retain for analysis
+
+# rerunning DAPC with 5 PC as it is the optimum for this dataset
+dapc3 <- dapc(final_data.matrix, grp = groups, n.pca = 5, var.cotrib = TRUE) # 1 discriminant function saved
+summary.dapc(dapc3)
+a.score.dapc3 <- a.score(dapc3) # on average there was a 33.7% accuracy with assigning pathotypes to a priori groups
+scatter(dapc3, grp = groups, legend = TRUE, scree.pca = TRUE, posi.pca = "topleft", posi.leg = "bottomleft")
+
+#identifying the important resistance genes that are different between the groups (studies)
+contrib <- loadingplot(dapc3$var.contr, axis = 1, threshold = 0.10, lab.jitter = 1) # shows the resistance genes which are different from each group. threshold of 0.10 means 
+contrib_genes <- seploc(final_data.matrix) # wont work because it is not a Gen-type format, it is a matrix
+
+
+## Supplementary figure 1 data and code ##
+
+sup.fig1.data <- read_excel("L:/Austin/!Phytophthora sojae pathotype survey/Pathotype records/Supplementary Figure 1 data.xlsx")
+
+ggplot(sup.fig1.data,aes(x = hrs, y = od_600)) +
+  stat_summary(fun=mean,position=position_dodge(width=0.95), geom="point") +
+  #geom_line() +
+  stat_smooth(method = "loess", se = FALSE, color = "black") +
+  #scale_fill_manual(values=wes_palette(n=4, name="Moonrise2")) +
+  stat_summary(fun.data = mean_se,position=position_dodge(width=0.95), geom = "errorbar", col= "#4d4d4d") +
+  theme_gray() +
+  facet_wrap(~Isolate, ncol = 6)+
+  guides(fill = FALSE) +
+  ## scale_fill_manual(values = col[1:2]) +
+  theme(axis.text.x = element_text(size = 9, face = "bold", angle=45, hjust=1, family = "serif"),
+        axis.text.y = element_text(size = 20, face = "bold", family = "serif"),
+        axis.title.x = element_text(size = 20, face = "bold", family = "serif"),
+        axis.title.y = element_text(size = 20, face = "bold", family = "serif"),
+        axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'),
+        axis.line.y = element_line(colour = 'gray', size=0.5, linetype='solid'),
+        legend.text = element_text(size = 10, face = "bold", family = "serif"),
+        legend.key = element_blank(),
+        legend.title = element_text(size = 10, face="bold", family = "serif"),
+        legend.position = "right",
+        strip.text.x = element_text(size = 10, face = "bold", family = "serif"),
+        title = element_text(size = 16, family = "serif")) +
+        xlab("hours after inoculation") + ylab("od600")
