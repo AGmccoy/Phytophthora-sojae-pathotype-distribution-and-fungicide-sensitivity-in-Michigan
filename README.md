@@ -35,5 +35,9 @@ Multistate_metadata.xlsx
   
  * Excel data file containing meta-data for isolates from this survey as well as Kaitany et al 2001.
 
+Supplementary Figure 1 data.xlsx
+
+ * Excel data file containing data necessary to produce Supp. Figure 1 for the manuscript. Red box featured in manuscript was added after R in powerpoint.
+
 # Data used in this analysis is from:
 Kaitany, R. C., Hart, L. P. & Safir, G. R. Virulence Composition of Phytophthora sojae in Michigan. Plant Disease. 85, 1103–1106 (2001). https://apsjournals.apsnet.org/doi/10.1094/PDIS.2001.85.10.1103
