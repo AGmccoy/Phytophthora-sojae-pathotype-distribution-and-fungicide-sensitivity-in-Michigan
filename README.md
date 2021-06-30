@@ -41,3 +41,5 @@ Supplementary Figure 1 data.xlsx
 
 # Data used in this analysis is from:
 Kaitany, R. C., Hart, L. P. & Safir, G. R. Virulence Composition of Phytophthora sojae in Michigan. Plant Disease. 85, 1103–1106 (2001). https://apsjournals.apsnet.org/doi/10.1094/PDIS.2001.85.10.1103
+
+Mccoy, A. G., Noel, Z. A., Jacobs, Clouse, K. M., & Chilvers, M. I. Phytophthora sojae pathotype distribution and fungicide sensitivity in Michigan. Plant Disease. _First Look_ (2021). https://apsjournals.apsnet.org/doi/10.1094/PDIS-03-21-0443-RE
