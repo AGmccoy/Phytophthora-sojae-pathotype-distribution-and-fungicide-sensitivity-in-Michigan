@@ -1,5 +1,5 @@
 # _Phytophthora sojae_ pathotype distribution and fungicide sensitivity in Michigan.
-Scripts used to analyze and visualize Virulence data, as well as fungicide sensitivity data for the P. sojae pathotype survey
+Scripts used to analyze and visualize Virulence data, as well as fungicide sensitivity data for the _P. sojae_ pathotype survey
 
 # All code are presented in .R files with necessary files for analysis in excel.
 
@@ -40,6 +40,6 @@ Supplementary Figure 1 data.xlsx
  * Excel data file containing data necessary to produce Supp. Figure 1 for the manuscript. Red box featured in manuscript was added after R in powerpoint.
 
 # Data used in this analysis is from:
-Kaitany, R. C., Hart, L. P. & Safir, G. R. Virulence Composition of Phytophthora sojae in Michigan. Plant Disease. 85, 1103–1106 (2001). https://apsjournals.apsnet.org/doi/10.1094/PDIS.2001.85.10.1103
+Kaitany, R. C., Hart, L. P. & Safir, G. R. Virulence Composition of _Phytophthora sojae_ in Michigan. Plant Disease. 85, 1103–1106 (2001). https://apsjournals.apsnet.org/doi/10.1094/PDIS.2001.85.10.1103
 
-Mccoy, A. G., Noel, Z. A., Jacobs, Clouse, K. M., & Chilvers, M. I. Phytophthora sojae pathotype distribution and fungicide sensitivity in Michigan. Plant Disease. _First Look_ (2021). https://apsjournals.apsnet.org/doi/10.1094/PDIS-03-21-0443-RE
+Mccoy, A. G., Noel, Z. A., Jacobs, Clouse, K. M., & Chilvers, M. I. _Phytophthora sojae_ pathotype distribution and fungicide sensitivity in Michigan. Plant Disease. _First Look_ (2021). https://apsjournals.apsnet.org/doi/10.1094/PDIS-03-21-0443-RE
