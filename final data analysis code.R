@@ -1,13 +1,13 @@
-library(hagis)
-library(readxl)
-library(pander)
-library(ggplot2)
-library(data.table)
-library(ape)
-library(vegan)
-library(dplyr)
-library(adegenet)
-
+library(hagis) # Version 3.1.0
+library(readxl) # Version 1.3.1
+library(pander) # Version 0.6.3
+library(ggplot2) # Version 3.3.0
+library(data.table) # Version 1.12.8
+library(ape) # Version 5.3
+library(vegan) # Version 2.5-6
+library(dplyr) # Version 0.8.5
+library(adegenet) # Version 2.1.2
+# R version 3.5.2 used for analysis
 
 citation("ape")
 citation("vegan")
